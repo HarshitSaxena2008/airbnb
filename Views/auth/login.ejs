@@ -1,0 +1,182 @@
+<%- include('../partials/nav') %>
+<% const h = locals.home || {}; const isEditing = !!locals.editing; %>
+    <style>
+      /* ===== Page ===== */
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f3f4f6;
+        color: #1f2937;
+      }
+
+      /* ===== Navbar (Header partial) ===== */
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px 32px;
+        background-color: #1f2937;
+        color: #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .navbar__logo {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: #fbbf24;
+      }
+      .navbar__links {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .navbar__item {
+        margin: 0;
+      }
+      .navbar__link {
+        color: #e5e7eb;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 6px 4px;
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s ease, border-color 0.2s ease;
+      }
+      .navbar__link:hover,
+      .navbar__link:focus {
+        color: #fbbf24;
+        border-bottom-color: #fbbf24;
+      }
+      .signup-errors {
+        margin: 0 0 22px;
+        padding: 14px 18px;
+        color: #a61b1b;
+        background: #fff1f1;
+        border: 1px solid #f2b8b8;
+        border-radius: 10px;
+      }
+
+      .signup-errors p {
+        margin: 0 0 6px;
+        font-weight: 600;
+      }
+
+      .signup-errors ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .signup-errors li + li {
+        margin-top: 4px;
+      }
+      /* ===== Main container ===== */
+      .page-container {
+        width: 100%;
+        max-width: 1152px;
+        margin: 40px auto 0;
+        padding: 32px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        box-sizing: border-box;
+      }
+      .page-title {
+        margin: 0 0 24px;
+        font-size: 30px;
+        font-weight: 700;
+        text-align: center;
+        color: #ef4444;
+      }
+
+      /* ===== Form ===== */
+      .home-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .form-input {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .form-input:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+      }
+      .form-button {
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        background-color: #ef4444;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+      .form-button:hover {
+        background-color: #dc2626;
+      }
+
+      /* ===== Mobile ===== */
+      @media (max-width: 640px) {
+        .navbar {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 12px 16px;
+        }
+        .navbar__links {
+          flex-wrap: wrap;
+          gap: 12px 16px;
+        }
+        .page-container {
+          margin-top: 20px;
+          padding: 20px 16px;
+        }
+        .page-title {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/Header') %>
+    <main class="page-container">
+      <h2 class="page-title">
+        Enter your info:
+      </h2> 
+      <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <div class="signup-errors" role="alert" aria-live="polite">
+          <p>Error</p>
+          <ul>
+              <li><%= errorMessage %></li>
+          </ul>
+        </div>
+      <% } %>
+      <form class="home-form" action="/login" method="POST">
+        <input class="form-input" type="email" name="email" placeholder="Enter email...">
+        <input class="form-input" type="password" name="password" placeholder="password">
+        <button class="form-button" type="submit">Sign In</button>
+      </form>
+    </main>
+  </body>
+</html>
+<!-- harshitsaxena23456_db_user :- username -->
+ <!-- G14awvneVtCBGdBS :- password -->
+  <!-- mongodb+srv://harshitsaxena23456_db_user:<db_password>@cluster0.zgnk6us.mongodb.net/?appName=Cluster0 -->
+    <!-- mongodb+srv://harshitsaxena23456_db_user:G14awvneVtCBGdBS@cluster0.zgnk6us.mongodb.net/?appName=Cluster0 -->

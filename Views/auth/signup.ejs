@@ -1,0 +1,418 @@
+<%- include('../partials/nav') %>
+<% const oldInputs = locals.oldInputs || {}; const errors = locals.errors || []; %>
+<style>
+  :root {
+    color-scheme: light;
+    font-family: "Poppins", Arial, sans-serif;
+    color: #222;
+    background: #f7f7f7;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background:
+      radial-gradient(circle at 8% 8%, rgba(255, 90, 95, 0.11), transparent 28rem),
+      #f7f7f7;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px clamp(20px, 6vw, 88px);
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid #eee;
+  }
+
+  .navbar__logo {
+    color: #ff385c;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .navbar__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .navbar__link {
+    color: #444;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 160ms ease;
+  }
+
+  .navbar__link:hover,
+  .navbar__link:focus-visible {
+    color: #ff385c;
+  }
+
+  .signup-shell {
+    display: grid;
+    min-height: calc(100vh - 69px);
+    place-items: center;
+    padding: 44px 20px;
+  }
+
+  .signup-card {
+    width: min(100%, 540px);
+    padding: clamp(28px, 6vw, 48px);
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 22px;
+    box-shadow: 0 18px 55px rgba(34, 34, 34, 0.09);
+  }
+
+  .signup-eyebrow {
+    margin: 0 0 8px;
+    color: #ff385c;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .signup-title {
+    margin: 0;
+    color: #222;
+    font-size: clamp(27px, 5vw, 34px);
+    font-weight: 600;
+    letter-spacing: -1.2px;
+    text-align: center;
+  }
+
+  .signup-intro {
+    margin: 10px 0 30px;
+    color: #717171;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .signup-errors {
+    margin: 0 0 22px;
+    padding: 14px 18px;
+    color: #a61b1b;
+    background: #fff1f1;
+    border: 1px solid #f2b8b8;
+    border-radius: 10px;
+  }
+
+  .signup-errors p {
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+
+  .signup-errors ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .signup-errors li + li {
+    margin-top: 4px;
+  }
+
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+  }
+
+  .name-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-label,
+  .fieldset-legend {
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    color: #222;
+    font: inherit;
+    font-size: 14px;
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .field-input::placeholder {
+    color: #a0a0a0;
+  }
+
+  .field-input:focus {
+    border-color: #ff385c;
+    box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.13);
+  }
+
+  .account-type {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .account-type-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .account-type-option {
+    position: relative;
+  }
+
+  .account-type-option input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .account-type-card {
+    display: flex;
+    min-height: 68px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 12px 15px;
+    border: 1px solid #d8d8d8;
+    border-radius: 11px;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .account-type-name {
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .account-type-description {
+    color: #777;
+    font-size: 12px;
+  }
+
+  .account-type-option input:checked + .account-type-card {
+    background: #fff6f7;
+    border-color: #ff385c;
+    box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.1);
+  }
+
+  .account-type-option input:focus-visible + .account-type-card {
+    outline: 3px solid rgba(255, 56, 92, 0.25);
+    outline-offset: 2px;
+  }
+
+  .terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #646464;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .terms-checkbox {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+    margin: 1px 0 0;
+    accent-color: #ff385c;
+  }
+
+  .terms-row label {
+    cursor: pointer;
+  }
+
+  .signup-button {
+    min-height: 50px;
+    color: #fff;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(100deg, #ff385c, #e61e4d);
+    border: 0;
+    border-radius: 11px;
+    box-shadow: 0 7px 16px rgba(230, 30, 77, 0.2);
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .signup-button:hover {
+    box-shadow: 0 10px 20px rgba(230, 30, 77, 0.28);
+    transform: translateY(-1px);
+  }
+
+  .signup-button:focus-visible {
+    outline: 3px solid rgba(255, 56, 92, 0.3);
+    outline-offset: 3px;
+  }
+
+  .login-prompt {
+    margin: 3px 0 0;
+    color: #717171;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .login-prompt a {
+    color: #e61e4d;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .login-prompt a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 520px) {
+    .navbar {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .navbar__links {
+      gap: 8px 18px;
+    }
+
+    .signup-shell {
+      min-height: auto;
+      padding: 28px 14px;
+    }
+
+    .signup-card {
+      padding: 28px 22px;
+      border-radius: 17px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .name-fields {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <%- include('../partials/Header') %>
+  <main class="signup-shell">
+    <section class="signup-card" aria-labelledby="signup-title">
+      <p class="signup-eyebrow">Welcome to Airbnb</p>
+      <h1 class="signup-title" id="signup-title">Create your account</h1>
+      <p class="signup-intro">Join our community and find a place that feels like home.</p>
+
+      <% if (errors.length) { %>
+        <div class="signup-errors" role="alert" aria-live="polite">
+          <p>Please correct the following:</p>
+          <ul>
+            <% errors.forEach((error) => { %>
+              <li><%= error %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+
+      <form class="signup-form" action="/signup" method="POST">
+        <div class="name-fields">
+          <div class="field">
+            <label class="field-label" for="firstName">First name</label>
+            <input class="field-input" id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="e.g. Alex" value="<%= oldInputs.firstName || '' %>" required>
+          </div>
+          <div class="field">
+            <label class="field-label" for="lastName">Last name</label>
+            <input class="field-input" id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="e.g. Morgan" value="<%= oldInputs.lastName || '' %>">
+          </div>
+          <div class="field">
+            <label class="field-label" for="email">Email</label>
+            <input class="field-input" id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email.." value="<%= oldInputs.email || '' %>">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="password">Password</label>
+          <input class="field-input" id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a password" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="confirmPassword">Confirm password</label>
+          <input class="field-input" id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Enter your password again" required>
+        </div>
+
+        <fieldset class="account-type">
+          <legend class="fieldset-legend">I want to join as a</legend>
+          <div class="account-type-options">
+            <label class="account-type-option">
+              <input type="radio" name="userType" value="guest" <%= oldInputs.userType === 'guest' ? 'checked' : '' %> required>
+              <span class="account-type-card">
+                <span class="account-type-name">Guest</span>
+                <span class="account-type-description">Discover places to stay</span>
+              </span>
+            </label>
+            <label class="account-type-option">
+              <input type="radio" name="userType" value="host" <%= oldInputs.userType === 'host' ? 'checked' : '' %> required>
+              <span class="account-type-card">
+                <span class="account-type-name">Host</span>
+                <span class="account-type-description">Share a place you love</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="terms-row">
+          <input class="terms-checkbox" id="terms" name="terms" type="checkbox" required>
+          <label for="terms">I agree to the Terms and Conditions.</label>
+        </div>
+
+        <button class="signup-button" type="submit">Create account</button>
+        <p class="login-prompt">Already have an account? <a href="/login">Log in</a></p>
+      </form>
+    </section>
+  </main>
+  <script>
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+
+    function validatePasswordMatch() {
+      confirmPasswordInput.setCustomValidity(
+        confirmPasswordInput.value && passwordInput.value !== confirmPasswordInput.value
+          ? "Passwords do not match."
+          : "",
+      );
+    }
+
+    passwordInput.addEventListener("input", validatePasswordMatch);
+    confirmPasswordInput.addEventListener("input", validatePasswordMatch);
+  </script>
+</body>
+</html>
