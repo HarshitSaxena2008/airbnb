@@ -39,7 +39,7 @@ app.use(multer({ storage: storage, fileFilter: fileFilter }).single("photo"));
 app.use(parser());
 app.use(
   session({
-    secret: "harshit@2",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   }),
