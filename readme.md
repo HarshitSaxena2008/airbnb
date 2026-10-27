@@ -29,8 +29,6 @@ A full-stack Airbnb-style web application where **hosts** can list their homes a
 
 ## 🛠️ Tech Stack
 
-> Update this section according to your project.
-
 | Layer    | Technology                  |
 | -------- | --------------------------- |
 | Frontend | HTML, CSS, JavaScript / EJS |
@@ -83,8 +81,6 @@ DATABASE_URL=your_database_url_here
 SESSION_SECRET=your_secret_here
 PORT=3000
 ```
-
-> ⚠️ Never commit your `.env` file. It is already listed in `.gitignore`.
 
 ### 4. Run the project
 
