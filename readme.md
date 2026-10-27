@@ -31,13 +31,13 @@ A full-stack Airbnb-style web application where **hosts** can list their homes a
 
 > Update this section according to your project.
 
-| Layer    | Technology                    |
-| -------- | ----------------------------- |
-| Frontend | HTML, CSS, JavaScript / React |
-| Backend  | Node.js, Express.js           |
-| Database | MongoDB (Mongoose)            |
-| Auth     | Sessions / JWT, bcrypt        |
-| Uploads  | Multer (for home photos)      |
+| Layer    | Technology                  |
+| -------- | --------------------------- |
+| Frontend | HTML, CSS, JavaScript / EJS |
+| Backend  | Node.js, Express.js         |
+| Database | MongoDB (Mongoose)          |
+| Auth     | Sessions / JWT, bcrypt      |
+| Uploads  | Multer (for home photos)    |
 
 ---
 
@@ -64,7 +64,7 @@ airbnb/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
+git clone
 cd your-repo-name
 ```
 
@@ -92,7 +92,7 @@ PORT=3000
 npm start
 ```
 
-Open `http://localhost:3000` in your browser.
+Open `http://localhost:5000` in your browser.
 
 ---
 
